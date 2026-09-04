@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#03002b">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="preload" href="./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="./assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./style.css">
+  <title>Aether Weather — Weather App</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Aether Weather home">
+        <img src="./assets/images/logo.svg" alt="" aria-hidden="true">
+        <span>Aether</span>
+      </a>
+
+      <div class="units-wrap">
+        <button class="units-button" id="unitsButton" type="button" aria-haspopup="true" aria-expanded="false">
+          <img src="./assets/images/icon-units.svg" alt="" aria-hidden="true">
+          <span>Units</span>
+          <img class="chevron" src="./assets/images/icon-dropdown.svg" alt="" aria-hidden="true">
+        </button>
+
+        <div class="units-menu" id="unitsMenu" role="menu" aria-label="Unit preferences" hidden>
+          <button class="menu-title menu-toggle" id="switchLabel" type="button">Switch to Imperial</button>
+
+          <div class="unit-group">
+            <span class="unit-label">Temperature</span>
+            <button type="button" class="unit-option" data-temp="c" role="menuitemradio" aria-checked="true">Celsius (°C)<span class="check">✓</span></button>
+            <button type="button" class="unit-option" data-temp="f" role="menuitemradio" aria-checked="false">Fahrenheit (°F)<span class="check">✓</span></button>
+          </div>
+
+          <div class="unit-group">
+            <span class="unit-label">Wind Speed</span>
+            <button type="button" class="unit-option" data-wind="kmh" role="menuitemradio" aria-checked="true">km/h<span class="check">✓</span></button>
+            <button type="button" class="unit-option" data-wind="mph" role="menuitemradio" aria-checked="false">mph<span class="check">✓</span></button>
+          </div>
+
+          <div class="unit-group">
+            <span class="unit-label">Precipitation</span>
+            <button type="button" class="unit-option" data-precip="mm" role="menuitemradio" aria-checked="true">Millimeters (mm)<span class="check">✓</span></button>
+            <button type="button" class="unit-option" data-precip="in" role="menuitemradio" aria-checked="false">Inches (in)<span class="check">✓</span></button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="heroTitle">
+        <h1 id="heroTitle">How's the sky looking today?</h1>
+
+        <div class="search-area">
+          <form class="search-row" id="searchForm" autocomplete="off">
+            <div class="search-box-wrap">
+              <img src="./assets/images/icon-search.svg" alt="" aria-hidden="true">
+              <input id="searchInput" name="location" type="search" placeholder="Search for a place..." aria-label="Search for a city or place" spellcheck="false">
+            </div>
+            <button class="search-button" type="submit">Search</button>
+          </form>
+          <div class="search-results" id="searchResults" role="listbox" aria-label="Location suggestions" hidden></div>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <section class="main-column" aria-label="Weather summary">
+          <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+
+          <article class="current-card" id="currentCard">
+            <div class="current-copy">
+              <h2 id="locationName">Berlin, Germany</h2>
+              <p id="locationDate">Tuesday, Aug 5, 2025</p>
+            </div>
+            <div class="current-value">
+              <img id="currentIcon" src="./assets/images/icon-sunny.webp" alt="Sunny">
+              <span id="currentTemp">20°</span>
+            </div>
+          </article>
+
+          <section class="metrics-grid" aria-label="Current weather details">
+            <article class="metric-card"><h3>Feels Like</h3><p id="feelsLike">18°</p></article>
+            <article class="metric-card"><h3>Humidity</h3><p id="humidity">46%</p></article>
+            <article class="metric-card"><h3>Wind</h3><p id="wind">14 km/h</p></article>
+            <article class="metric-card"><h3>Precipitation</h3><p id="precipitation">0 mm</p></article>
+          </section>
+
+          <section class="daily-section" aria-labelledby="dailyHeading">
+            <h2 class="section-title" id="dailyHeading">Daily forecast</h2>
+            <div class="daily-grid" id="dailyGrid"></div>
+          </section>
+
+          <section class="mobile-hourly" aria-labelledby="mobileHourlyHeading">
+            <div class="hourly-card" id="hourlyCardMobile">
+              <div class="hourly-head">
+                <h2 class="section-title" id="mobileHourlyHeading">Hourly forecast</h2>
+                <label class="day-select-wrap">
+                  <span class="sr-only">Select hourly forecast day</span>
+                  <select id="hourSelectMobile" class="day-select"></select>
+                </label>
+              </div>
+              <div class="hourly-list" id="hourlyListMobile"></div>
+            </div>
+          </section>
+        </section>
+
+        <aside class="desktop-hourly" aria-labelledby="hourlyHeading">
+          <div class="hourly-card">
+            <div class="hourly-head">
+              <h2 class="section-title" id="hourlyHeading">Hourly forecast</h2>
+              <label class="day-select-wrap">
+                <span class="sr-only">Select hourly forecast day</span>
+                <select id="hourSelect" class="day-select"></select>
+              </label>
+            </div>
+            <div class="hourly-list" id="hourlyList"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <noscript>
+      <div class="noscript">JavaScript is required to load live weather data.</div>
+    </noscript>
+  </div>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
